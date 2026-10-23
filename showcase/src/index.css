@@ -1,0 +1,30 @@
+@import "tailwindcss";
+
+@layer base {
+  :focus-visible {
+    outline: 2px solid #5794f2 !important;
+    outline-offset: 2px !important;
+  }
+}
+
+/* Accessible High Contrast Mode simulation */
+.high-contrast-mode {
+  --bg-primary: #000000;
+  --bg-secondary: #1a1a1a;
+  --text-primary: #ffffff;
+  --border-primary: #ffffff;
+}
+
+.high-contrast-mode * {
+  border-color: #ffffff !important;
+}
+
+/* Reduced motion preference */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

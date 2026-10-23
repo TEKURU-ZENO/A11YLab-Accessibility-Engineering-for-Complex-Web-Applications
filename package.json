@@ -1,0 +1,27 @@
+{
+  "name": "a11ylab",
+  "version": "1.0.0",
+  "private": true,
+  "description": "A11YLab — Accessibility Engineering for Complex Web Applications (Grafana Flagship Case Study)",
+  "type": "module",
+  "scripts": {
+    "dev": "npm run dev --prefix showcase",
+    "build": "npm run build --prefix showcase",
+    "preview": "npm run preview --prefix showcase",
+    "audit": "node scripts/run-audit.js",
+    "verify": "powershell -ExecutionPolicy Bypass -File scripts/verify-all.ps1"
+  },
+  "keywords": [
+    "accessibility",
+    "a11y",
+    "grafana",
+    "wcag22",
+    "wai-aria",
+    "screen-readers",
+    "voiceover",
+    "nvda",
+    "axe-core",
+    "playwright"
+  ],
+  "author": "A11YLab Accessibility Engineering Specialist"
+}

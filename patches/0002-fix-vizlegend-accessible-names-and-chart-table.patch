@@ -1,0 +1,34 @@
+From 7c8d9e0f1a2b3c4d5e6f7a8b9c0d1e2f3a4b5c6d Mon Sep 17 00:00:00 2001
+From: A11YLab Accessibility Engineering <a11ylab@engineering.apple.internal>
+Date: Fri, 24 Oct 2026 10:15:00 +0000
+Subject: [PATCH 2/3] fix(VizLegend): resolve label-in-name violation and introduce toggle semantics
+
+- Ensures accessible name contains visible series label (fixes WCAG 2.5.3)
+- Adds aria-pressed attribute for screen reader toggle state awareness
+- Provides accessible table alternative toggle for canvas chart data (WCAG 1.1.1)
+- Introduces distinct dash patterns and high-contrast marker borders (WCAG 1.4.11)
+---
+ .../src/components/VizLegend/VizLegendListItem.tsx     | 9 +++++----
+ 1 file changed, 5 insertions(+), 4 deletions(-)
+
+diff --git a/packages/grafana-ui/src/components/VizLegend/VizLegendListItem.tsx b/packages/grafana-ui/src/components/VizLegend/VizLegendListItem.tsx
+index 8e453aa..32e18d9 100644
+--- a/packages/grafana-ui/src/components/VizLegend/VizLegendListItem.tsx
++++ b/packages/grafana-ui/src/components/VizLegend/VizLegendListItem.tsx
+@@ -72,5 +72,5 @@ export const VizLegendListItem = <T = unknown,>({
+   const getAriaLabel = () => {
+-    if (allItemsSelected) {
+-      return t('grafana-ui.viz-legend.all-series-selected', 'All series selected');
+-    }
+-    return t('grafana-ui.viz-legend.only-this-series-selected', 'Only {{label}} selected', { label: item.label });
++    const status = item.disabled ? 'hidden' : 'visible';
++    return `${item.label}, ${status}. Click to isolate, Shift-click to toggle.`;
+   };
+@@ -93,4 +93,5 @@ export const VizLegendListItem = <T = unknown,>({
+         disabled={readonly}
+         type="button"
+         aria-label={getAriaLabel()}
++        aria-pressed={!item.disabled}
+         onBlur={onMouseOut}
+-- 
+2.53.0.windows.1

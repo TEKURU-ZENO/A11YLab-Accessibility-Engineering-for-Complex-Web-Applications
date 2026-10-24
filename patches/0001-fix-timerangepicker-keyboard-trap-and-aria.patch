@@ -1,78 +1,51 @@
-From 5a4b3c2d1e0f8a9b7c6d5e4f3a2b1c0d9e8f7a6b Mon Sep 17 00:00:00 2001
-From: A11YLab Accessibility Engineering <a11ylab@engineering.apple.internal>
-Date: Fri, 24 Oct 2026 10:00:00 +0000
-Subject: [PATCH 1/3] fix(DateTimePickers): remove keyboard trap, introduce radiogroup semantics and aria-expanded state
+From 8d724fc3b4a65bcd6341dbeee47908f7de960b2b Mon Sep 17 00:00:00 2001
+From: Dev Mehta <devmehta060505@gmail.com>
+Date: Sat, 24 Oct 2026 16:22:27 +0530
+Subject: [PATCH] fix(DateTimePickers): resolve TimeRangePicker keyboard trap
+ and radiogroup semantics
 
-- Removes 'Tab' from CAUGHT_KEYS in useListFocus to prevent event.preventDefault() trapping
-- Replaces invalid presentation role + aria-roledescription on ul with role="radiogroup"
-- Updates TimeRangeOption inputs from checkbox to radio for single-selection truth
-- Adds aria-haspopup="dialog" and aria-expanded to ToolbarButton trigger
-- Fixes WCAG 2.1.2 (Keyboard Trap), WCAG 1.3.1 (Info & Relationships), WCAG 4.1.2 (Name, Role, Value)
 ---
- .../DateTimePickers/TimeRangePicker.tsx       |  6 +++++-
- .../DateTimePickers/TimeRangePicker/hooks.ts  |  6 +-----
- .../TimeRangePicker/TimeRangeList.tsx         |  8 ++++----
- .../TimeRangePicker/TimeRangeOption.tsx       |  6 +++---
- 4 files changed, 13 insertions(+), 13 deletions(-)
+ .../src/components/DateTimePickers/TimeRangePicker.tsx      | 2 ++
+ .../DateTimePickers/TimeRangePicker/TimeRangeList.tsx       | 4 ++--
+ .../DateTimePickers/TimeRangePicker/TimeRangeOption.tsx     | 2 +-
+ .../src/components/DateTimePickers/TimeRangePicker/hooks.ts | 6 ++----
+ 4 files changed, 7 insertions(+), 7 deletions(-)
 
 diff --git a/packages/grafana-ui/src/components/DateTimePickers/TimeRangePicker.tsx b/packages/grafana-ui/src/components/DateTimePickers/TimeRangePicker.tsx
-index 404c0d1..515c0e2 100644
+index 85d2371..1adec6b 100644
 --- a/packages/grafana-ui/src/components/DateTimePickers/TimeRangePicker.tsx
 +++ b/packages/grafana-ui/src/components/DateTimePickers/TimeRangePicker.tsx
-@@ -220,7 +220,11 @@ export function TimeRangePicker(props: TimeRangePickerProps) {
-           aria-label={t('time-picker.range-picker.current-time-selected', 'Time range selected: {{currentTimeRange}}', {
+@@ -219,6 +219,8 @@ export function TimeRangePicker(props: TimeRangePickerProps) {
              currentTimeRange,
            })}
--          aria-controls="TimePickerContent"
+           aria-controls="TimePickerContent"
 +          aria-haspopup="dialog"
 +          aria-expanded={isOpen}
-+          aria-controls={isOpen ? "TimePickerContent" : undefined}
            onClick={onToolbarButtonSwitch}
            icon={timePickerIcon}
            isOpen={isOpen}
-diff --git a/packages/grafana-ui/src/components/DateTimePickers/TimeRangePicker/hooks.ts b/packages/grafana-ui/src/components/DateTimePickers/TimeRangePicker/hooks.ts
-index c6b63d9..40f128c 100644
---- a/packages/grafana-ui/src/components/DateTimePickers/TimeRangePicker/hooks.ts
-+++ b/packages/grafana-ui/src/components/DateTimePickers/TimeRangePicker/hooks.ts
-@@ -6,1 +6,1 @@ const modulo = (a: number, n: number) => ((a % n) + n) % n;
--const CAUGHT_KEYS = ['ArrowUp', 'ArrowDown', 'Home', 'End', 'Enter', 'Tab'];
-+const CAUGHT_KEYS = ['ArrowUp', 'ArrowDown', 'Home', 'End', 'Enter'];
-@@ -37,5 +37,1 @@ export const useListFocus = ({ localRef, options }: UseListFocusProps): UseListF
-     if (CAUGHT_KEYS.indexOf(event.key) > -1) {
-       event.preventDefault();
--      if (event.key !== 'Tab') {
--        event.stopPropagation();
--      }
-+      event.stopPropagation();
-     }
 diff --git a/packages/grafana-ui/src/components/DateTimePickers/TimeRangePicker/TimeRangeList.tsx b/packages/grafana-ui/src/components/DateTimePickers/TimeRangePicker/TimeRangeList.tsx
-index d7a12b9..e8a49c2 100644
+index 61f4460..69ae656 100644
 --- a/packages/grafana-ui/src/components/DateTimePickers/TimeRangePicker/TimeRangeList.tsx
 +++ b/packages/grafana-ui/src/components/DateTimePickers/TimeRangePicker/TimeRangeList.tsx
-@@ -53,6 +53,6 @@ const Options = ({ options, value, onChange, title }: Props) => {
--      <ul
+@@ -51,10 +51,10 @@ const Options = ({ options, value, onChange, title }: Props) => {
+   return (
+     <>
+       <ul
 -        role="presentation"
-+      <div
 +        role="radiogroup"
 +        aria-label={title ?? t('time-picker.time-range.default-title', 'Time ranges')}
          onKeyDown={handleKeys}
          ref={localRef}
 -        aria-roledescription={t('time-picker.time-range.aria-role', 'Time range selection')}
          className={styles.list}
-@@ -69,1 +69,1 @@ const Options = ({ options, value, onChange, title }: Props) => {
--      </ul>
-+      </div>
+       >
+         {options.map((option, index) => (
 diff --git a/packages/grafana-ui/src/components/DateTimePickers/TimeRangePicker/TimeRangeOption.tsx b/packages/grafana-ui/src/components/DateTimePickers/TimeRangePicker/TimeRangeOption.tsx
-index 45b89ef..23d11ea 100644
+index cc178e7..71b34c7 100644
 --- a/packages/grafana-ui/src/components/DateTimePickers/TimeRangePicker/TimeRangeOption.tsx
 +++ b/packages/grafana-ui/src/components/DateTimePickers/TimeRangePicker/TimeRangeOption.tsx
-@@ -69,5 +69,5 @@ export const TimeRangeOption = memo<Props>(({ value, onSelect, selected = false
--    <li
-+    <div
-       className={styles.container}
-       data-testid={selectors.components.TimePicker.timeRangeOption(value.from, value.to)}
-     >
-       <input
+@@ -74,7 +74,7 @@ export const TimeRangeOption = memo<Props>(({ value, onSelect, selected = false,
          className={styles.radio}
          checked={selected}
          name={name}
@@ -80,8 +53,31 @@ index 45b89ef..23d11ea 100644
 +        type="radio"
          data-role="item"
          tabIndex={-1}
-@@ -87,1 +87,1 @@ export const TimeRangeOption = memo<Props>(({ value, onSelect, selected = false
--    </li>
-+    </div>
+         id={id}
+diff --git a/packages/grafana-ui/src/components/DateTimePickers/TimeRangePicker/hooks.ts b/packages/grafana-ui/src/components/DateTimePickers/TimeRangePicker/hooks.ts
+index 5a4a81f..4dc9ccb 100644
+--- a/packages/grafana-ui/src/components/DateTimePickers/TimeRangePicker/hooks.ts
++++ b/packages/grafana-ui/src/components/DateTimePickers/TimeRangePicker/hooks.ts
+@@ -3,7 +3,7 @@ import { type RefObject, useEffect, useState } from 'react';
+ import { type TimeOption } from '@grafana/data';
+ 
+ const modulo = (a: number, n: number) => ((a % n) + n) % n;
+-const CAUGHT_KEYS = ['ArrowUp', 'ArrowDown', 'Home', 'End', 'Enter', 'Tab'];
++const CAUGHT_KEYS = ['ArrowUp', 'ArrowDown', 'Home', 'End', 'Enter'];
+ 
+ /** @internal */
+ export interface UseListFocusProps {
+@@ -35,9 +35,7 @@ export const useListFocus = ({ localRef, options }: UseListFocusProps): UseListF
+ 
+     if (CAUGHT_KEYS.indexOf(event.key) > -1) {
+       event.preventDefault();
+-      if (event.key !== 'Tab') {
+-        event.stopPropagation();
+-      }
++      event.stopPropagation();
+     }
+ 
+     let newFocusedIndex = null;
 -- 
 2.53.0.windows.1
+

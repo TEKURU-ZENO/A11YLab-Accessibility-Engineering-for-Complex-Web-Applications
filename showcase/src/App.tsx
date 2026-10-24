@@ -17,7 +17,6 @@ import {
   ToggleRight,
   Sun,
   Moon,
-  Apple,
   ExternalLink,
   Code2,
 } from 'lucide-react';
@@ -56,7 +55,7 @@ const AppContent: React.FC = () => {
                     A11YLab — Web Accessibility Engineering
                   </h1>
                   <span className="rounded bg-emerald-500/10 px-2 py-0.5 text-[10px] font-semibold text-emerald-300 border border-emerald-500/30">
-                    Apple Web A11Y Benchmark
+                    Enterprise Web A11Y Benchmark
                   </span>
                 </div>
                 <p className="text-xs text-gray-400">
@@ -224,12 +223,12 @@ const AppContent: React.FC = () => {
       <footer className="border-t border-[#252830] bg-[#14161b] py-4 text-xs text-gray-500">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-wrap items-center justify-between gap-2">
           <div>
-            A11YLab Flagship Case Study · Produced for Apple Web Accessibility Engineering Evaluation
+            A11YLab Flagship Case Study · Advanced Web Accessibility Engineering Benchmark
           </div>
           <div className="flex items-center gap-4">
             <span>WCAG 2.2 Level AA</span>
             <span>WAI-ARIA 1.2 / 1.3</span>
-            <span>Apple VoiceOver & NVDA Verified</span>
+            <span>VoiceOver & NVDA Verified</span>
           </div>
         </div>
       </footer>

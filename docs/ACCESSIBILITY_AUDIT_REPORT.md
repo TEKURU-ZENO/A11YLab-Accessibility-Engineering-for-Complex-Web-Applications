@@ -1,7 +1,7 @@
 # A11YLab: Grafana Web Accessibility Evaluation & Conformance Report
 **Target Application:** Grafana (Data-dense Observability & Analytics Platform)  
 **Standard:** W3C Web Content Accessibility Guidelines (WCAG) 2.2 Level AA  
-**Auditor:** Accessibility Engineering Specialist (Apple Web A11Y Benchmark)  
+**Auditor:** Web Accessibility Engineering Evaluation  
 **Date of Audit:** October 2026  
 **Evaluation Scope:** 3 Mission-Critical Workflows (Dashboard Navigation & Time Range Selection, Data Visualization & Panel Interactions, Alert Rule Configuration & Notification Builder)
 
@@ -28,7 +28,7 @@ This evaluation establishes an evidence-backed baseline across three high-impact
 The audit utilizes a hybrid evaluation methodology combining automated static analysis, headless browser scans, and real-world assistive technology screen reader verification:
 
 ### 2.1 Assistive Technology & Browser Matrix
-- **Apple VoiceOver (macOS Sonoma 14.6 / macOS Sequoia & iOS 18)**: Tested in Apple Safari 17/18 and Google Chrome. Evaluated Web Rotor (Headings, Form Controls, Landmarks), VO cursor navigation (`VO + Left/Right`), table traversal (`VO + Arrow`), and live announcement behavior.
+- **VoiceOver (macOS Sonoma 14.6 / macOS Sequoia & iOS 18)**: Tested in Safari 17/18 and Google Chrome. Evaluated Web Rotor (Headings, Form Controls, Landmarks), VO cursor navigation (`VO + Left/Right`), table traversal (`VO + Arrow`), and live announcement behavior.
 - **NVDA (NonVisual Desktop Access 2024.4)**: Tested in Google Chrome and Microsoft Edge on Windows 11. Evaluated Browse Mode (Virtual Buffer), Focus Mode (`Space/Enter`), Speech Viewer output, and Landmark quick keys (`D`).
 - **Keyboard-Only**: Standard physical mechanical keyboard without mouse/pointer devices. Evaluated `Tab`, `Shift+Tab`, `Arrow` keys, `Escape`, `Enter`, `Space`, and custom hotkeys.
 - **Forced Colors / Contrast**: Tested under Windows High Contrast Mode (`forced-colors: active`) and macOS System Settings -> Accessibility -> Display -> Increase Contrast.

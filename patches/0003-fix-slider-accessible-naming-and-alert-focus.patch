@@ -1,30 +1,34 @@
-From 9f8e7d6c5b4a3f2e1d0c9b8a7f6e5d4c3b2a1f0e Mon Sep 17 00:00:00 2001
-From: A11YLab Accessibility Engineering <a11ylab@engineering.apple.internal>
-Date: Fri, 24 Oct 2026 10:30:00 +0000
-Subject: [PATCH 3/3] fix(Slider): provide semantic accessible naming, companion input labels, and alert condition focus retention
+From e0d6954479e11bd73aed4d6e7723d2a8b6207d41 Mon Sep 17 00:00:00 2001
+From: Dev Mehta <devmehta060505@gmail.com>
+Date: Sat, 24 Oct 2026 17:07:57 +0530
+Subject: [PATCH] fix(Slider): provide accessible name for handle and companion
+ numeric input
 
-- Corrects default handle aria-label from instructions string to element identifier
-- Labels companion text input with descriptive aria-label
-- Adds unit-aware aria-valuetext for alert thresholds
-- Preserves focus on alert rule condition row deletion rather than dropping to body
-- Fixes WCAG 4.1.2 (Name, Role, Value), WCAG 2.4.3 (Focus Order), WCAG 3.3.2 (Labels)
 ---
- .../grafana-ui/src/components/Slider/Slider.tsx       | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ packages/grafana-ui/src/components/Slider/Slider.tsx | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
 diff --git a/packages/grafana-ui/src/components/Slider/Slider.tsx b/packages/grafana-ui/src/components/Slider/Slider.tsx
-index 38b15d2..e3c9071 100644
+index 3335fe4..067ad00 100644
 --- a/packages/grafana-ui/src/components/Slider/Slider.tsx
 +++ b/packages/grafana-ui/src/components/Slider/Slider.tsx
-@@ -110,2 +110,3 @@ export const Slider = ({
--  const dragHandleAriaLabel =
+@@ -108,7 +108,7 @@ export const Slider = ({
+   }, [externalValueChanged, value]);
+ 
+   const dragHandleAriaLabel =
 -    ariaLabelForHandle ?? t('grafana-ui.slider.drag-handle-aria-label', 'Use arrow keys to change the value');
-+  const dragHandleAriaLabel = ariaLabelForHandle ?? 'Threshold slider';
-@@ -183,1 +184,3 @@ export const Slider = ({
++    ariaLabelForHandle ?? t('grafana-ui.slider.drag-handle-aria-label', 'Slider');
+ 
+   const onSliderChange = useCallback(
+     (v: number | number[]) => {
+@@ -182,6 +182,7 @@ export const Slider = ({
            <Input
              type="text"
              width={7.5}
 +            aria-label={`${dragHandleAriaLabel} numeric value`}
              className={cx(styles.sliderInputField, ...sliderInputFieldClassNames)}
+             value={inputValue}
+             onChange={onTextInputChange}
 -- 
 2.53.0.windows.1
+

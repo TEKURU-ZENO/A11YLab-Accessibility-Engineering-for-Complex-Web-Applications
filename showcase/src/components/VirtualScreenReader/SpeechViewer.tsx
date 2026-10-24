@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useA11y } from '../../context/A11yContext';
-import { Volume2, Trash2, Apple, Monitor, ChevronUp, ChevronDown } from 'lucide-react';
+import { Volume2, Trash2, Laptop, Monitor, ChevronUp, ChevronDown } from 'lucide-react';
 
 export const SpeechViewer: React.FC = () => {
   const { speechLogs, clearSpeechLogs, activeScreenReader, setActiveScreenReader } = useA11y();
@@ -30,7 +30,7 @@ export const SpeechViewer: React.FC = () => {
             aria-label={`Switch screen reader profile to ${activeScreenReader === 'voiceover' ? 'NVDA' : 'VoiceOver'}`}
           >
             {activeScreenReader === 'voiceover' ? (
-              <Apple className="h-3.5 w-3.5 text-gray-300" aria-hidden="true" />
+              <Laptop className="h-3.5 w-3.5 text-gray-300" aria-hidden="true" />
             ) : (
               <Monitor className="h-3.5 w-3.5 text-blue-400" aria-hidden="true" />
             )}

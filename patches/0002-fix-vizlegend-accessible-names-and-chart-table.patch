@@ -1,31 +1,28 @@
-From ab2386b72fc0968387b997b19e3b84e27b3a9fa0 Mon Sep 17 00:00:00 2001
+From d16370f92dcc60980d6aedf3bda768d540b8cd5b Mon Sep 17 00:00:00 2001
 From: Dev Mehta <devmehta060505@gmail.com>
-Date: Sat, 24 Oct 2026 17:03:29 +0530
+Date: Wed, 4 Nov 2026 22:33:48 +0530
 Subject: [PATCH] fix(VizLegend): preserve series name in accessible name and
  expose toggle state
 
+Signed-off-by: Dev Mehta <devmehta060505@gmail.com>
 ---
- .../src/components/VizLegend/VizLegendListItem.tsx         | 7 +++----
- 1 file changed, 3 insertions(+), 4 deletions(-)
+ .../grafana-ui/src/components/VizLegend/VizLegendListItem.tsx  | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
 diff --git a/packages/grafana-ui/src/components/VizLegend/VizLegendListItem.tsx b/packages/grafana-ui/src/components/VizLegend/VizLegendListItem.tsx
-index 4a7acdf..442d748 100644
+index 4a7acdf8..2312cd09 100644
 --- a/packages/grafana-ui/src/components/VizLegend/VizLegendListItem.tsx
 +++ b/packages/grafana-ui/src/components/VizLegend/VizLegendListItem.tsx
-@@ -70,10 +70,8 @@ export const VizLegendListItem = <T = unknown,>({
-   );
+@@ -71,7 +71,7 @@ export const VizLegendListItem = <T = unknown,>({
  
    const getAriaLabel = () => {
--    if (allItemsSelected) {
+     if (allItemsSelected) {
 -      return t('grafana-ui.viz-legend.all-series-selected', 'All series selected');
--    }
--    return t('grafana-ui.viz-legend.only-this-series-selected', 'Only {{label}} selected', { label: item.label });
-+    const status = item.disabled ? 'hidden' : 'visible';
-+    return `${item.label}, ${status}`;
++      return `${item.label}, ${t('grafana-ui.viz-legend.all-series-selected', 'All series selected')}`;
+     }
+     return t('grafana-ui.viz-legend.only-this-series-selected', 'Only {{label}} selected', { label: item.label });
    };
- 
-   return (
-@@ -92,6 +90,7 @@ export const VizLegendListItem = <T = unknown,>({
+@@ -92,6 +92,7 @@ export const VizLegendListItem = <T = unknown,>({
          disabled={readonly}
          type="button"
          aria-label={getAriaLabel()}

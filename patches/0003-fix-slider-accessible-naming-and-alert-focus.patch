@@ -1,15 +1,16 @@
-From e0d6954479e11bd73aed4d6e7723d2a8b6207d41 Mon Sep 17 00:00:00 2001
+From 17fbe6ea90976a015ad73b7bfc8899235728532e Mon Sep 17 00:00:00 2001
 From: Dev Mehta <devmehta060505@gmail.com>
 Date: Sat, 24 Oct 2026 17:07:57 +0530
 Subject: [PATCH] fix(Slider): provide accessible name for handle and companion
  numeric input
 
+Signed-off-by: Dev Mehta <devmehta060505@gmail.com>
 ---
- packages/grafana-ui/src/components/Slider/Slider.tsx | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ packages/grafana-ui/src/components/Slider/Slider.tsx | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
 diff --git a/packages/grafana-ui/src/components/Slider/Slider.tsx b/packages/grafana-ui/src/components/Slider/Slider.tsx
-index 3335fe4..067ad00 100644
+index 3335fe46..070f9364 100644
 --- a/packages/grafana-ui/src/components/Slider/Slider.tsx
 +++ b/packages/grafana-ui/src/components/Slider/Slider.tsx
 @@ -108,7 +108,7 @@ export const Slider = ({
@@ -21,11 +22,13 @@ index 3335fe4..067ad00 100644
  
    const onSliderChange = useCallback(
      (v: number | number[]) => {
-@@ -182,6 +182,7 @@ export const Slider = ({
+@@ -182,6 +182,9 @@ export const Slider = ({
            <Input
              type="text"
              width={7.5}
-+            aria-label={`${dragHandleAriaLabel} numeric value`}
++            aria-label={t('grafana-ui.slider.numeric-input-aria-label', '{{label}} numeric value', {
++              label: dragHandleAriaLabel,
++            })}
              className={cx(styles.sliderInputField, ...sliderInputFieldClassNames)}
              value={inputValue}
              onChange={onTextInputChange}

@@ -124,7 +124,6 @@ A11YLab/
 ├── docs/
 │   ├── ACCESSIBILITY_AUDIT_REPORT.md         # Full WCAG 2.2 AA Conformance Traceability Matrix
 │   ├── ASSISTIVE_TECH_EVALUATION.md          # VoiceOver vs NVDA comparative testing analysis
-│   ├── UPSTREAM_SUBMISSION_GUIDE.md          # Step-by-step guide to opening PRs against grafana/grafana
 │   └── UPSTREAM_PR_PROPOSALS/
 │       ├── PR_01_TIMERANGEPICKER_REMEDIATION.md # TimeRangePicker PR-ready proposal
 │       ├── PR_02_VIZLEGEND_CHART_ACCESSIBILITY.md# VizLegend & Chart Table PR-ready proposal
@@ -158,9 +157,17 @@ A11YLab/
 
 ---
 
-## 5. PR-Ready Upstream Patches & Clean Verification
+## 5. Upstream PR Branches & Clean Patch Verification
 
-The patch files in `/patches` were generated directly against a clone of `grafana/grafana` using `git format-patch` with real commit authorship (`Dev Mehta <devmehta060505@gmail.com>`). All three patches pass `git apply --check` cleanly against upstream `grafana/grafana`.
+All three remediation branches are authored with Developer Certificate of Origin (DCO) sign-off (`Signed-off-by: Dev Mehta <devmehta060505@gmail.com>`) and pushed to [`TEKURU-ZENO/grafana`](https://github.com/TEKURU-ZENO/grafana). The patch files in `/patches` were generated directly against upstream `grafana/grafana` using `git format-patch` and pass `git apply --check` cleanly.
+
+### Open Pull Requests (1-Click Compare Links)
+- **PR 1:** [fix(DateTimePickers): resolve TimeRangePicker keyboard trap and radiogroup semantics](https://github.com/grafana/grafana/compare/main...TEKURU-ZENO:grafana:fix/timerangepicker-keyboard-trap?expand=1)  
+  *Branch:* `fix/timerangepicker-keyboard-trap` · *Affects:* `DateTimePickers/TimeRangePicker`
+- **PR 2:** [fix(VizLegend): preserve series name in accessible name and expose toggle state](https://github.com/grafana/grafana/compare/main...TEKURU-ZENO:grafana:fix/vizlegend-accessible-name?expand=1)  
+  *Branch:* `fix/vizlegend-accessible-name` · *Affects:* `VizLegend`
+- **PR 3:** [fix(Slider): provide accessible name for handle and companion numeric input](https://github.com/grafana/grafana/compare/main...TEKURU-ZENO:grafana:fix/slider-accessible-label?expand=1)  
+  *Branch:* `fix/slider-accessible-label` · *Affects:* `Slider`
 
 ### Base Commit SHA
 - **Repository:** `https://github.com/grafana/grafana`
@@ -168,7 +175,7 @@ The patch files in `/patches` were generated directly against a clone of `grafan
 - **Commit Title:** `Search: name global hybrid search results of types the server doesn't serve (#135713)`
 - **Commit Date:** `Thu Oct 22 20:55:56 2026 +0200`
 
-### Applying & Verifying Patches Against Grafana Upstream
+### Applying & Verifying Patches Locally
 ```bash
 # 1. Clone a fresh copy of Grafana
 git clone https://github.com/grafana/grafana.git
@@ -188,7 +195,7 @@ git apply --check /path/to/A11YLab/patches/0003-fix-slider-accessible-naming-and
 git apply /path/to/A11YLab/patches/0003-fix-slider-accessible-naming-and-alert-focus.patch
 ```
 
-To submit these patches as formal GitHub pull requests, consult the [Upstream Submission Guide](docs/UPSTREAM_SUBMISSION_GUIDE.md).
+For complete component diff specifications and technical rationales, see the [Upstream PR Proposals](docs/UPSTREAM_PR_PROPOSALS/).
 
 ---
 

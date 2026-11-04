@@ -3,4 +3,5 @@ dist/
 .system_generated/
 _grafana_upstream/
 *.log
+docs/UPSTREAM_SUBMISSION_GUIDE.md
 .DS_Store

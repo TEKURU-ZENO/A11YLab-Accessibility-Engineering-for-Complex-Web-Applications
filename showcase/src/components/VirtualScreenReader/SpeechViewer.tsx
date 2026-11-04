@@ -101,7 +101,7 @@ export const SpeechViewer: React.FC = () => {
             )}
           </div>
           <div className="mt-2 text-[10px] text-gray-400 flex items-center justify-between">
-            <span>Simulates OS Accessibility API speech buffer</span>
+            <span>Expected speech output based on AX tree properties</span>
             <span className="text-[#5794f2]">WCAG 4.1.2 & 4.1.3 verified</span>
           </div>
         </div>

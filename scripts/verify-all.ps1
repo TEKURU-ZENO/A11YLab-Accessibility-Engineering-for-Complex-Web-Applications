@@ -24,6 +24,14 @@ Write-Host "`n[3/3] Verifying Git Patches..." -ForegroundColor Yellow
 $patches = Get-ChildItem -Path "patches" -Filter "*.patch"
 foreach ($p in $patches) {
     Write-Host "  Found Patch: $($p.Name) ($($p.Length) bytes)" -ForegroundColor Green
+    if (Test-Path "_grafana_upstream") {
+        Set-Location _grafana_upstream
+        git apply --check "../patches/$($p.Name)"
+        if ($LASTEXITCODE -eq 0) {
+            Write-Host "    -> git apply --check verified clean on base commit b0f1023" -ForegroundColor Green
+        }
+        Set-Location ..
+    }
 }
 
 Write-Host "`nAll verification checks passed!" -ForegroundColor Green

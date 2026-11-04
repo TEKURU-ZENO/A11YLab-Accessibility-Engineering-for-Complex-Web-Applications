@@ -59,7 +59,7 @@ const AppContent: React.FC = () => {
                   </span>
                 </div>
                 <p className="text-xs text-gray-400">
-                  Target Application: <strong>Grafana</strong> · Evidence-Backed Remediation & Assistive Tech Evaluation
+                  Target Application: <strong>Grafana</strong> · Component Reproduction Workbench · Patches apply to <code>grafana/grafana</code>
                 </p>
               </div>
             </div>
@@ -168,7 +168,7 @@ const AppContent: React.FC = () => {
               }`}
             >
               <GitPullRequest className="h-3.5 w-3.5 text-emerald-400" aria-hidden="true" />
-              <span>Upstream PR Patches</span>
+              <span>PR-Ready Patches</span>
             </button>
 
             <button

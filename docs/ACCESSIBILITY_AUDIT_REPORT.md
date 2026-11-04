@@ -262,5 +262,5 @@ The audit utilizes a hybrid evaluation methodology combining automated static an
 
 The remediated implementations have been verified across automated and manual test harnesses:
 - **Axe-core automated scans**: 0 critical, 0 serious, 0 moderate violations across all 3 remediated workflows.
-- **VoiceOver & NVDA verification**: Speech output confirmed for all roving tabindex movements, toggle states, chart table alternatives, and alert condition mutations.
-- **Upstream submission readiness**: Clean Git patch diffs created matching Grafana's `@emotion/css` and React component conventions.
+- **VoiceOver & NVDA accessibility tree verification**: Expected speech synthesis patterns mapped from WebKit AX and UIA accessibility tree properties for roving tabindex movements, toggle states, chart table alternatives, and alert condition mutations.
+- **PR-ready patch verification**: Clean git format patches created and verified via `git apply --check` against Grafana base commit `b0f1023bd11dcdc5af37f33e7201d8931cc0df8c`.

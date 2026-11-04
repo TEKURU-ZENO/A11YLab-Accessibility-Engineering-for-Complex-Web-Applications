@@ -1,7 +1,13 @@
 # A11YLab — Accessibility Engineering for Complex Web Applications
-### Flagship Case Study · Open-Source Remediation · Assistive Technology Testing · Regression Protection
+### Flagship Case Study · Component Remediation & PR-Ready Patches · Assistive Technology Testing · Regression Protection
 **Target Application:** Grafana (Data-dense Observability & Analytics Platform)  
 **Standards:** W3C Web Content Accessibility Guidelines (WCAG) 2.2 Level AA · WAI-ARIA 1.2 / 1.3 · W3C ARIA Authoring Practices Guide (APG)  
+
+---
+
+> [!NOTE]
+> **Architecture & Scope**: The interactive demonstration application in [`/showcase`](showcase/) is an **isolated component workbench and reproduction testbench**. It faithfully re-creates the three targeted Grafana workflows in an isolated React 19 / Tailwind environment to provide side-by-side before/after toggling, an accessibility speech viewer, and in-browser axe-core testing without requiring a full Grafana backend infrastructure.  
+> The three production remediation patches located in [`/patches`](patches/) are **PR-ready git format patches** authored directly against upstream `grafana/grafana` on base commit `b0f1023bd11dcdc5af37f33e7201d8931cc0df8c`. To open them upstream, see the [Upstream Submission Guide](docs/UPSTREAM_SUBMISSION_GUIDE.md).
 
 ---
 
@@ -16,9 +22,9 @@ Modern enterprise web applications—especially monitoring dashboards, telemetry
 **A11YLab** is an engineering case study in auditing, diagnosing, and remediating high-complexity client-side workflows:
 1. **Real-world Audit & Root Cause Analysis**: Establishing an automated baseline with Lighthouse and axe-core, followed by deep manual source code investigations rather than superficial warning counts.
 2. **Deep Semantic Remediation**: Authoring production-ready patches for upstream Grafana components with semantic HTML, accessible names, keyboard ergonomics, roving tabindex, focus management, and screen-reader announcements.
-3. **Assistive Technology Parity**: Testing and documenting exact reading flow, rotor behavior, and speech synthesis differences across **VoiceOver** (macOS / iOS Safari) and **NVDA** (Windows Chrome / Edge).
+3. **Assistive Technology Parity**: Testing and documenting expected reading flow, rotor behavior, and speech synthesis differences across **VoiceOver** (macOS / iOS Safari) and **NVDA** (Windows Chrome / Edge).
 4. **Regression Protection**: Implementing automated Playwright tests powered by `@axe-core/playwright` asserting on both automated rulesets and critical behavioral accessibility journeys.
-5. **Engineering Judgment**: Prioritizing real user equivalence over audit score inflation, scoping to three high-impact workflows, and producing upstream git patches ready for contribution.
+5. **Engineering Judgment**: Prioritizing real user equivalence over audit score inflation, scoping to three high-impact workflows, and authoring PR-ready git patches for upstream Grafana components.
 
 ---
 
@@ -74,7 +80,9 @@ Web accessibility engineers must understand how assistive technologies parse acc
 └─────────────────────────────────┴────────────────────────────────────────────────────────┘
 ```
 
-### Verbatim Speech Output: Real-world Screen Reader Transcripts
+### Expected Screen-Reader Speech Output (Synthesized from WebKit AX & UIA Accessibility Tree Properties)
+
+> **Methodology Note**: The speech strings documented below reflect the expected speech synthesis outputs derived from element accessibility attributes (`AXTitle`, `AXDescription`, `AXRole`, `AXValue`, `AXExpanded`, `AXPopupValue` in WebKit on macOS Sonoma Safari 17, and `IAccessible2` / UIA Name, Role, State, Value in Chromium on Windows 11) following standard platform announcement phrasing algorithms.
 
 #### VizLegend Item Selection (Workflow 2)
 - **Before Remediation**:
@@ -116,10 +124,11 @@ A11YLab/
 ├── docs/
 │   ├── ACCESSIBILITY_AUDIT_REPORT.md         # Full WCAG 2.2 AA Conformance Traceability Matrix
 │   ├── ASSISTIVE_TECH_EVALUATION.md          # VoiceOver vs NVDA comparative testing analysis
+│   ├── UPSTREAM_SUBMISSION_GUIDE.md          # Step-by-step guide to opening PRs against grafana/grafana
 │   └── UPSTREAM_PR_PROPOSALS/
-│       ├── PR_01_TIMERANGEPICKER_REMEDIATION.md # TimeRangePicker PR proposal
-│       ├── PR_02_VIZLEGEND_CHART_ACCESSIBILITY.md# VizLegend & Chart Table PR proposal
-│       └── PR_03_SLIDER_ALERTING_FOCUS_ORDER.md # Slider & Alert Focus PR proposal
+│       ├── PR_01_TIMERANGEPICKER_REMEDIATION.md # TimeRangePicker PR-ready proposal
+│       ├── PR_02_VIZLEGEND_CHART_ACCESSIBILITY.md# VizLegend & Chart Table PR-ready proposal
+│       └── PR_03_SLIDER_ALERTING_FOCUS_ORDER.md # Slider & Alert Focus PR-ready proposal
 ├── patches/                                   # Verified Git format patches for grafana/grafana
 │   ├── 0001-fix-timerangepicker-keyboard-trap-and-aria.patch
 │   ├── 0002-fix-vizlegend-accessible-names-and-chart-table.patch
@@ -130,13 +139,13 @@ A11YLab/
 │       ├── workflow-1-timerangepicker.spec.ts # TimeRangePicker axe + keyboard trap tests
 │       ├── workflow-2-chart-legend.spec.ts    # Chart axe + Label-in-Name + table toggle tests
 │       └── workflow-3-alert-builder.spec.ts   # Alert slider + focus retention tests
-├── showcase/                                  # Interactive Verification Workbench (Vite + React)
+├── showcase/                                  # Isolated Component Workbench (Vite + React)
 │   ├── src/
 │   │   ├── components/
 │   │   │   ├── Workflow1_TimeRangePicker/     # Before & After TimePicker implementations
 │   │   │   ├── Workflow2_ChartAccessibility/  # Canvas chart + Accessible table + Crosshair
 │   │   │   ├── Workflow3_AlertBuilder/        # Dynamic rule rows with focus management
-│   │   │   ├── VirtualScreenReader/           # Live Speech Viewer (VoiceOver / NVDA logs)
+│   │   │   ├── VirtualScreenReader/           # Expected Speech Viewer (VoiceOver / NVDA logs)
 │   │   │   ├── AxeRunner/                     # In-browser axe-core 4.10.2 runner
 │   │   │   └── DiffViewer/                    # Side-by-side upstream patch inspector
 │   │   ├── context/A11yContext.tsx            # Global a11y state, speech synthesis logger
@@ -149,13 +158,26 @@ A11YLab/
 
 ---
 
-## 5. Upstream Patches & Clean Verification
+## 5. PR-Ready Upstream Patches & Clean Verification
 
-The patch files in `/patches` were generated directly against a clone of `grafana/grafana` using `git format-patch` with real commit authorship (`Dev Mehta <devmehta060505@gmail.com>`). All three patches pass `git apply --check` cleanly against Grafana's current `main` branch.
+The patch files in `/patches` were generated directly against a clone of `grafana/grafana` using `git format-patch` with real commit authorship (`Dev Mehta <devmehta060505@gmail.com>`). All three patches pass `git apply --check` cleanly against upstream `grafana/grafana`.
 
-### Applying Upstream Patches to Grafana
+### Base Commit SHA
+- **Repository:** `https://github.com/grafana/grafana`
+- **Base Commit SHA:** `b0f1023bd11dcdc5af37f33e7201d8931cc0df8c`
+- **Commit Title:** `Search: name global hybrid search results of types the server doesn't serve (#135713)`
+- **Commit Date:** `Thu Oct 22 20:55:56 2026 +0200`
+
+### Applying & Verifying Patches Against Grafana Upstream
 ```bash
-# In your Grafana repository clone:
+# 1. Clone a fresh copy of Grafana
+git clone https://github.com/grafana/grafana.git
+cd grafana
+
+# 2. Checkout the verified base commit (or work from current main)
+git checkout b0f1023bd11dcdc5af37f33e7201d8931cc0df8c
+
+# 3. Verify clean patch application
 git apply --check /path/to/A11YLab/patches/0001-fix-timerangepicker-keyboard-trap-and-aria.patch
 git apply /path/to/A11YLab/patches/0001-fix-timerangepicker-keyboard-trap-and-aria.patch
 
@@ -166,12 +188,14 @@ git apply --check /path/to/A11YLab/patches/0003-fix-slider-accessible-naming-and
 git apply /path/to/A11YLab/patches/0003-fix-slider-accessible-naming-and-alert-focus.patch
 ```
 
+To submit these patches as formal GitHub pull requests, consult the [Upstream Submission Guide](docs/UPSTREAM_SUBMISSION_GUIDE.md).
+
 ---
 
 ## 6. Verification & Quick Start
 
-### 6.1 Launch Interactive Workbench (Showcase)
-Experience the live before-and-after workflows, test keyboard navigation, inspect the real-time VoiceOver/NVDA speech viewer, and run in-browser axe scans:
+### 6.1 Launch Component Workbench (Showcase)
+Experience the before-and-after component reproductions, test keyboard navigation, inspect the real-time speech viewer, and run in-browser axe scans:
 
 ```bash
 # From workspace root

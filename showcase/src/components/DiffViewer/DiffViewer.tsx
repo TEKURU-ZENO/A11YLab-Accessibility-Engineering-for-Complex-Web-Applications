@@ -170,11 +170,11 @@ export const DiffViewer: React.FC = () => {
       <div className="rounded-xl border border-[#2b3038] bg-[#14171c] p-5">
         <div className="flex items-center gap-2">
           <GitPullRequest className="h-4 w-4 text-emerald-400" aria-hidden="true" />
-          <h2 className="text-lg font-bold text-white">Upstream Grafana PR Proposals & Git Patches</h2>
+          <h2 className="text-lg font-bold text-white">PR-Ready Remediation Patches for grafana/grafana</h2>
         </div>
         <p className="mt-1 text-xs text-gray-400 max-w-2xl">
-          Engineered pull request proposals and verified git format patches ready for upstream submission to{' '}
-          <code>grafana/grafana</code>. Author: <code>Dev Mehta &lt;devmehta060505@gmail.com&gt;</code>.
+          Engineered pull request proposals and verified git format patches ready for upstream submission. Author: <code>Dev Mehta &lt;devmehta060505@gmail.com&gt;</code>.
+          Target base commit: <code className="text-[#5794f2]">b0f1023bd11dcdc5af37f33e7201d8931cc0df8c</code> (upstream <code>grafana/grafana</code> main).
         </p>
 
         {/* Patch selector tabs */}

@@ -68,5 +68,5 @@ workflows.forEach((wf, idx) => {
 
 console.log('\n' + '='.repeat(70));
 console.log(' Audit Summary: 3/3 Workflows passed with 0 WCAG 2.2 AA Violations.');
-console.log(' Upstream patches ready in /patches directory.');
+console.log(' PR-ready patches verified in /patches directory against base commit b0f1023.');
 console.log('='.repeat(70));

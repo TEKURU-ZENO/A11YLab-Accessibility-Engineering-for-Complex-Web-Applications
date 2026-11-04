@@ -1,6 +1,8 @@
 # Grafana Pull Request Proposal: Fix TimeRangePicker Keyboard Trap, Radiogroup Semantics, and Dialog ARIA States
 
 **Target Repository:** `grafana/grafana`  
+**Base Commit:** `b0f1023bd11dcdc5af37f33e7201d8931cc0df8c` (upstream `main`)  
+**Status:** PR-ready authored patch (verified via `git apply --check`)  
 **Packages Affected:** `@grafana/ui` (`packages/grafana-ui/src/components/DateTimePickers/TimeRangePicker/`)  
 **Type:** Accessibility Bugfix / WCAG 2.2 AA Compliance  
 **Issue Category:** Operable / Robust  
